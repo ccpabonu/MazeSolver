@@ -9,7 +9,7 @@ class BoardGrapher:
         self.name = name
         self.matrix = matrix
         self.rows, self.columns = matrix.shape
-        self.sPixels = 25
+        self.sPixels = int(600/self.rows)
         self.img = np.ones((self.rows * self.sPixels, self.columns * self.sPixels, 3))
         self.colorWalls = [0, 0, 0]
         self.colorTrack = [0, 45, 187]
