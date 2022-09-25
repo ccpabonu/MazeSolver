@@ -2,3 +2,4 @@ matplotlib~=3.6.0
 numpy~=1.23.3
 Pillow~=9.2.0
 PyQt5~=5.15.7
+opencv_python~=4.6.0.66
