@@ -8,7 +8,6 @@ class TreeGenerator:
         self.m, self.n = self.matrix.shape
         self.root = Node(f"{0},{1}")
         self.createTree(self.root)
-        print(RenderTree(self.root))
 
     def createTree(self, root, parent=None):
         x, y = root.name.split(',')
@@ -37,3 +36,9 @@ class TreeGenerator:
             if self.matrix[x+1][y] == 'c' and (x + 1 != xp or y != yp):
                 child = Node(f"{x+1},{y}", root)
                 self.createTree(child, root)
+
+    def getTree (self):
+        return self.root
+
+    def getTarget(self):
+        return str(self.n-1)+','+str(self.m-2)
