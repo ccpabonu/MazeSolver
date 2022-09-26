@@ -9,6 +9,7 @@ class Node_S():
     def __init__(self,data,next=None):
         self.data = data
         self.next = next
+
 class Stack: #LIFO
     def __init__(self):
         # Init stack
@@ -131,5 +132,21 @@ def dfs(MAZE):
     return explored, array_way
 
 # dfs(result)
+
+
+
+
+    # explored, f_way = dfs(result)
+
+
+    # for i in range(len(explored)):
+    #     track = (explored[0:i+1])
+    #     g.printTrack(track, f"{i}")
+
+    # for i in range(len(explored)):
+    #     track = (f_way[0:i+1])
+    #     g.printTrack(track, f"{i}"+"final")
+
+
 
 
