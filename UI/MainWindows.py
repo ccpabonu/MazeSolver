@@ -7,7 +7,7 @@ from PyQt5.QtGui import QImage
 
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
-from IU.BoardGrapher import BoardGrapher
+from UI.BoardGrapher import BoardGrapher
 
 
 class MainWindows(QMainWindow):
@@ -17,7 +17,7 @@ class MainWindows(QMainWindow):
         self.matrix = None
         self.name = ""
         super(MainWindows, self).__init__()
-        uic.loadUi("IU/UIQtDesigner/MainWindow.ui", self)
+        uic.loadUi("UI/UIQtDesigner/MainWindow.ui", self)
         self.pushButton.clicked.connect(self.cargarImagen)
         self.pushButton_2.clicked.connect(self.prueba)
 
@@ -34,12 +34,10 @@ class MainWindows(QMainWindow):
         name = name[::-1]
         self.name = name[:-4]
         self.matrix = self.CvsToMatrix()
-        route = "IU"
+        route = "UI"
         g = BoardGrapher(self.matrix, self.name, route)
-        imagen = cv2.imread(f"IU/img/{self.name}-Walls.png")
-        cv2.imshow('windows',imagen)
-
-        #self.setPhoto(imagen)
+        imagen = cv2.imread(f"UI/img/{self.name}-Walls.png")
+        cv2.imshow(f'{self.name}-Walls.png',imagen)
 
     def setPhoto(self, image):
         frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
