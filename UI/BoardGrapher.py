@@ -17,14 +17,12 @@ class BoardGrapher:
         self.filenames = []
         self.printWalls()
 
-
     def printWalls(self):
         for i in range(self.rows):
             for j in range(self.columns):
                 if self.matrix[i][j] == "w":
                     self.printCell(i, j, self.colorWalls)
         self.printImage("Walls")
-
 
     def printImage(self,i):
         im = Image.fromarray(np.uint8(self.img * 255))

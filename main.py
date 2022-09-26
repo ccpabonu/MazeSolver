@@ -1,10 +1,10 @@
 
+from Algorithms.Depth import Depth
 from Algorithms.Models.TreeGenerator import TreeGenerator
 import csv
 import numpy
 from anytree import Node, RenderTree
 from anytree.exporter import DotExporter
-
 from Algorithms.Width import Width
 from UI.BoardGrapher import BoardGrapher
 
@@ -16,15 +16,15 @@ if __name__ == '__main__':
     route = "UI"
     g = BoardGrapher(result, "maze_10x10", route)
 
-    treeGen = TreeGenerator(result)
-    tree = treeGen.getTree()
-    print(RenderTree(tree))
-    target = treeGen.getTarget()
-    d = Width(tree, target, g)
+    # treeGen = TreeGenerator(result)
+    # tree = treeGen.getTree()
+    # print(RenderTree(tree))
+    # target = treeGen.getTarget()
+    # d = Width(tree, target, g)
+    # g.printGif()
+
+    profundidad = Depth(result,g)
     g.printGif()
-
-
-
 
     # g = BoardGrapher(result, "maze_5x5", route)
     # track = [[0, 1]]
