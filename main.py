@@ -1,3 +1,6 @@
+import sys
+
+from PyQt5.QtWidgets import QApplication
 
 from Algorithms.Depth import Depth
 from Algorithms.Models.TreeGenerator import TreeGenerator
@@ -7,14 +10,15 @@ from anytree import Node, RenderTree
 from anytree.exporter import DotExporter
 from Algorithms.Width import Width
 from UI.BoardGrapher import BoardGrapher
+from UI.MainWindows import MainWindows
 
 if __name__ == '__main__':
-    reader = csv.reader(open("MazeExamples/maze_10x10.csv", "rt"), delimiter=",")
-    x = list(reader)
-    x = [ele for ele in x if ele != []]
-    result = numpy.array(x)
-    route = "UI"
-    g = BoardGrapher(result, "maze_10x10", route)
+    # reader = csv.reader(open("MazeExamples/maze_10x10.csv", "rt"), delimiter=",")
+    # x = list(reader)
+    # x = [ele for ele in x if ele != []]
+    # result = numpy.array(x)
+    # route = "UI"
+    # g = BoardGrapher(result, "maze_10x10", route)
 
     # treeGen = TreeGenerator(result)
     # tree = treeGen.getTree()
@@ -23,8 +27,8 @@ if __name__ == '__main__':
     # d = Width(tree, target, g)
     # g.printGif()
 
-    profundidad = Depth(result,g)
-    g.printGif()
+    # profundidad = Depth(result,g)
+    # g.printGif()
 
     # g = BoardGrapher(result, "maze_5x5", route)
     # track = [[0, 1]]
@@ -42,10 +46,10 @@ if __name__ == '__main__':
     # track = [[0, 1], [1, 1], [2, 1], [2, 2], [2, 3], [3, 3], [4, 3]]
     # g.printTrack(track, "7")
 
-    # app = QApplication(sys.argv)
-    # windows = MainWindows()
-    # windows.show()
-    # sys.exit(app.exec())
+    app = QApplication(sys.argv)
+    windows = MainWindows()
+    windows.show()
+    sys.exit(app.exec())
 
 
 

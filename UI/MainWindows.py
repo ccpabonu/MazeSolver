@@ -1,4 +1,5 @@
 import csv
+import tkinter as tk
 import cv2
 
 import numpy
@@ -6,8 +7,14 @@ from PyQt5 import uic, QtWidgets, QtGui, Qt
 from PyQt5.QtGui import QImage
 
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from anytree import RenderTree
+from anytree.exporter import DotExporter
+from graphviz import render
 
+from Algorithms.Models.TreeGenerator import TreeGenerator
+from Algorithms.Width import Width
 from UI.BoardGrapher import BoardGrapher
+from UI.LoadingGif import ImageLabel
 
 
 class MainWindows(QMainWindow):
@@ -16,10 +23,14 @@ class MainWindows(QMainWindow):
         self.routeMaze = ""
         self.matrix = None
         self.name = ""
+        self.g = None
+        self.tree = None
+        self.target = None
+
         super(MainWindows, self).__init__()
         uic.loadUi("UI/UIQtDesigner/MainWindow.ui", self)
         self.pushButton.clicked.connect(self.cargarImagen)
-        self.pushButton_2.clicked.connect(self.prueba)
+        self.pushButton_2.clicked.connect(self.solveMaze)
 
     def cargarImagen(self):
         self.routeMaze = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
@@ -35,9 +46,25 @@ class MainWindows(QMainWindow):
         self.name = name[:-4]
         self.matrix = self.CvsToMatrix()
         route = "UI"
-        g = BoardGrapher(self.matrix, self.name, route)
+        self.g = BoardGrapher(self.matrix, self.name, route)
         imagen = cv2.imread(f"UI/img/{self.name}-Walls.png")
         cv2.imshow(f'{self.name}-Walls.png',imagen)
+
+        treeGen = TreeGenerator(self.matrix)
+        self.tree = treeGen.getTree()
+        print(RenderTree(self.tree))
+        self.target = treeGen.getTarget()
+        DotExporter(self.tree).to_dotfile(f"UI/tree/{self.name}.dot")
+
+        render('dot', 'png', f"UI/tree/{self.name}.dot")
+
+        imagen2 = cv2.imread(f"UI/tree/{self.name}.dot.png")
+        cv2.imshow(f'{self.name}-tree.png', imagen2)
+
+
+
+
+
 
     def setPhoto(self, image):
         frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -45,9 +72,15 @@ class MainWindows(QMainWindow):
         imagen = imagen.scaled(400, 400, Qt.KeepAspectRatio)
         self.label.setPixmap(QtGui.QPixmap.fromImage(imagen))
 
-    def prueba(self):
-        print("Funciona el boton")
+    def solveMaze(self):
 
+        Width(self.tree, self.target, self.g)
+        self.g.printGif()
+        root = tk.Tk()
+        lbl = ImageLabel(root)
+        lbl.pack()
+        lbl.load(f"UI/gif/{self.g.name}.gif")
+        root.mainloop()
 
     def CvsToMatrix(self):
         reader = csv.reader(open(self.routeMaze, "rt"), delimiter=",")
