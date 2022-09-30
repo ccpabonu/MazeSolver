@@ -12,9 +12,12 @@ class Iterative_Depth:
         self.print_idfs()
         
     def print_idfs(self):
+        '''
+        This function print the images 
+        '''
         for i in range(len(self.explored)):
             track = (self.explored[0:i+1])
-            self.gph.printTrack(track, f"{i}")
+            self.gph.printTrack(track, f"IDFS_{i}")
 
         # for i in range(len(self.explored)):
         #     track = (self.f_way[0:i+1])
