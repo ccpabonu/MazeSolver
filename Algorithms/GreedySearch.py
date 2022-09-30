@@ -11,9 +11,12 @@ class Greedy_Search:
         self.print_A_Star()
 
     def print_A_Star(self):
+        '''
+        This function print the images 
+        '''
         for i in range(len(self.explored)):
             track = (self.explored[0:i+1])
-            self.gph.printTrack(track, f"{i}")
+            self.gph.printTrack(track, f"GreedySearch_{i}")
     
     def generate_cost(self, MAZE):
         g_score = {}
