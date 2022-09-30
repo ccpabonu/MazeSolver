@@ -11,8 +11,13 @@ from anytree import RenderTree
 from anytree.exporter import DotExporter
 from graphviz import render
 
+from Algorithms.AStar import AStar
+from Algorithms.Depth import Depth
+from Algorithms.GreedySearch import GreedySearch
+from Algorithms.IterativeDepth import IterativeDepth
 from Algorithms.Models.Enums.Search import Search
 from Algorithms.Models.TreeGenerator import TreeGenerator
+from Algorithms.UniformCostSearch import UniformCostSearch
 from Algorithms.Width import Width
 from UI.BoardGrapher import BoardGrapher
 from UI.LoadingGif import ImageLabel
@@ -72,18 +77,25 @@ class MainWindows(QMainWindow):
 
         selected = self.comboBox.currentText()
 
-        if selected == Search.Depth:
+        if selected == Search.Depth.value:
+            self.g.name = self.name + "-Depth"
             self.solveDepth()
         elif selected == Search.Width.value:
+            self.g.name = self.name + "-Width"
             self.solveWidth()
         elif selected == Search.UniformCostSearch.value:
+            self.g.name = self.name + "-UniformCost"
             self.solveUniformCostSearch()
         elif selected == Search.AStar.value:
+            self.g.name = self.name + "-AStar"
             self.solveAStar()
         elif selected == Search.Greedy.value:
+            self.g.name = self.name + "-Greedy"
             self.solveGreedy()
         elif selected == Search.InteractiveDepth.value:
+            self.g.name = self.name + "-Interactive"
             self.solveInteractiveDepth()
+
 
     def CvsToMatrix(self):
         reader = csv.reader(open(self.routeMaze, "rt"), delimiter=",")
@@ -93,7 +105,13 @@ class MainWindows(QMainWindow):
         return result
 
     def solveDepth(self):
-        pass
+        Depth(self.matrix, self.g)
+        self.g.printGif()
+        root = tk.Tk()
+        lbl = ImageLabel(root)
+        lbl.pack()
+        lbl.load(f"UI/gif/{self.g.name}.gif")
+        root.mainloop()
 
     def solveWidth(self):
         Width(self.tree, self.target, self.g)
@@ -105,13 +123,37 @@ class MainWindows(QMainWindow):
         root.mainloop()
 
     def solveUniformCostSearch(self):
-        pass
+        UniformCostSearch(self.matrix, self.g)
+        self.g.printGif()
+        root = tk.Tk()
+        lbl = ImageLabel(root)
+        lbl.pack()
+        lbl.load(f"UI/gif/{self.g.name}.gif")
+        root.mainloop()
 
     def solveAStar(self):
-        pass
+        AStar(self.matrix, self.g)
+        self.g.printGif()
+        root = tk.Tk()
+        lbl = ImageLabel(root)
+        lbl.pack()
+        lbl.load(f"UI/gif/{self.g.name}.gif")
+        root.mainloop()
 
     def solveGreedy(self):
-        pass
+        GreedySearch(self.matrix, self.g)
+        self.g.printGif()
+        root = tk.Tk()
+        lbl = ImageLabel(root)
+        lbl.pack()
+        lbl.load(f"UI/gif/{self.g.name}.gif")
+        root.mainloop()
 
     def solveInteractiveDepth(self):
-        pass
+        IterativeDepth(self.matrix, self.g)
+        self.g.printGif()
+        root = tk.Tk()
+        lbl = ImageLabel(root)
+        lbl.pack()
+        lbl.load(f"UI/gif/{self.g.name}.gif")
+        root.mainloop()

@@ -2,7 +2,7 @@ import numpy as np
 from Algorithms.Models.Stack import Stack
 
 
-class Iterative_Depth:
+class IterativeDepth:
     def __init__(self,MAZE,gph):
         self.MAZE = MAZE
         self.gph = gph
@@ -17,7 +17,7 @@ class Iterative_Depth:
         '''
         for i in range(len(self.explored)):
             track = (self.explored[0:i+1])
-            self.gph.printTrack(track, f"IDFS_{i}")
+            self.gph.printTrack(track, f"{i}")
 
         # for i in range(len(self.explored)):
         #     track = (self.f_way[0:i+1])

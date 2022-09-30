@@ -1,6 +1,3 @@
-import time
-
-import matplotlib.image as image
 import numpy as np
 from PIL import Image
 import imageio
@@ -18,7 +15,7 @@ class BoardGrapher:
         self.colorWalls = [0, 0, 0]
         self.colorTrack = [0, 45, 187]
         self.filenames = []
-        self.Gif = False
+        self.BasicImage = []
         self.printWalls()
 
     def printWalls(self):
@@ -26,6 +23,7 @@ class BoardGrapher:
             for j in range(self.columns):
                 if self.matrix[i][j] == "w":
                     self.printCell(i, j, self.colorWalls)
+        self.BasicImage = self.img.copy()
         self.printImage("Walls")
 
     def printImage(self, i):
@@ -48,4 +46,5 @@ class BoardGrapher:
         for filename in self.filenames:
             images.append(imageio.imread(filename))
         imageio.mimsave(f'UI/gif/{self.name}.gif', images, loop=1)
+        self.img = self.BasicImage.copy()
         self.filenames.clear()

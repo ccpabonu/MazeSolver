@@ -1,5 +1,4 @@
-from anytree import Node, RenderTree
-from anytree.exporter import DotExporter
+from anytree import Node
 
 
 class TreeGenerator:

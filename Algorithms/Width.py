@@ -1,11 +1,8 @@
 import sys
 
-from anytree import Node
-from UI.BoardGrapher import BoardGrapher
 
-class Width :
+class Width:
     def __init__(self, tree, target, grapher):
-        grapher.name = grapher.name + '-Width'
         self.grapher = grapher
         self.tree = tree
         self.target = target

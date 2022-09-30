@@ -1,7 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from itertools import count
-import threading
 
 
 class ImageLabel(tk.Label):

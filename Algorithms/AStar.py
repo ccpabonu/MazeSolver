@@ -1,8 +1,9 @@
 from queue import PriorityQueue
 import numpy as np
 
-class A_Star:
-    def __init__(self,MAZE,gph):
+
+class AStar:
+    def __init__(self, MAZE, gph):
         self.MAZE = MAZE
         self.gph = gph
         self.explored = []
@@ -15,38 +16,38 @@ class A_Star:
         This function print the images 
         '''
         for i in range(len(self.explored)):
-            track = (self.explored[0:i+1])
-            self.gph.printTrack(track, f"A_star_{i}")
-    
+            track = (self.explored[0:i + 1])
+            self.gph.printTrack(track, f"{i}")
+
     def generate_cost(self, MAZE):
         g_score = {}
         for i in range(len(MAZE)):
             for j in range(len(MAZE)):
-                g_score[i,j] = float('inf')
+                g_score[i, j] = float('inf')
         return g_score
 
-    def distance(self,position,problem,distance_type='E'):
+    def distance(self, position, problem, distance_type='E'):
         if distance_type == 'E':
             "The Euclidean distance heuristic for a PositionSearchProblem"
             xy1 = position
             xy2 = problem
-            return ( (xy1[0] - xy2[0]) ** 2 + (xy1[1] - xy2[1]) ** 2 ) ** 0.5
+            return ((xy1[0] - xy2[0]) ** 2 + (xy1[1] - xy2[1]) ** 2) ** 0.5
         else:
             "The Manhattan distance heuristic for a PositionSearchProblem"
             xy1 = position
             xy2 = problem
             return abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
-        
+
     def A_Star_maze(self):
 
-        START = [0,np.where((self.MAZE[0] == 'c'))[0][0]]
-        GOAL = [self.MAZE.shape[0]-1,np.where((self.MAZE[self.MAZE.shape[0]-1] == 'c'))[0][0]]
+        START = [0, np.where((self.MAZE[0] == 'c'))[0][0]]
+        GOAL = [self.MAZE.shape[0] - 1, np.where((self.MAZE[self.MAZE.shape[0] - 1] == 'c'))[0][0]]
         g_cost_d = self.generate_cost(self.MAZE)
         g_cost_d[tuple(START)] = 0
         h_cost_d = self.generate_cost(self.MAZE)
-        h_cost_d[tuple(START)] = self.distance(START,GOAL,'M')
+        h_cost_d[tuple(START)] = self.distance(START, GOAL, 'M')
         queue_a = PriorityQueue()
-        queue_a.put( (self.distance(START,GOAL,'M'),self.distance(START,GOAL,'M'),tuple(START)) )
+        queue_a.put((self.distance(START, GOAL, 'M'), self.distance(START, GOAL, 'M'), tuple(START)))
         way = {}
         way_array = []
         while not queue_a.empty():
@@ -55,27 +56,26 @@ class A_Star:
                 way_array.append(position)
                 break
             for next_step in "SEON":
-                if next_step == 'S' and (self.MAZE[position[0]+1][position[1]] != 'w') :
-                    last_position = (position[0]+1, position[1])
-                if next_step == 'E' and (self.MAZE[position[0]][position[1]+1] != 'w'):
-                    last_position = (position[0], position[1]+1)
-                if next_step == 'O' and (self.MAZE[position[0]][position[1]-1] != 'w'):
-                    last_position = (position[0],position[1]-1)
-                if next_step == 'N' and (self.MAZE[position[0]-1][position[1]] != 'w'):
-                    last_position = (position[0]-1,position[1])
-                tg_cost_d = g_cost_d[position]+1
-                th_cost_d = tg_cost_d+self.distance(last_position,tuple(GOAL),'M')
+                if next_step == 'S' and (self.MAZE[position[0] + 1][position[1]] != 'w'):
+                    last_position = (position[0] + 1, position[1])
+                if next_step == 'E' and (self.MAZE[position[0]][position[1] + 1] != 'w'):
+                    last_position = (position[0], position[1] + 1)
+                if next_step == 'O' and (self.MAZE[position[0]][position[1] - 1] != 'w'):
+                    last_position = (position[0], position[1] - 1)
+                if next_step == 'N' and (self.MAZE[position[0] - 1][position[1]] != 'w'):
+                    last_position = (position[0] - 1, position[1])
+                tg_cost_d = g_cost_d[position] + 1
+                th_cost_d = tg_cost_d + self.distance(last_position, tuple(GOAL), 'M')
                 if position == tuple(GOAL):
                     break
                 if th_cost_d < h_cost_d[last_position]:
-                    g_cost_d[last_position]=tg_cost_d
-                    h_cost_d[last_position]=th_cost_d
-                    queue_a.put( (th_cost_d,self.distance(last_position, GOAL),last_position,'M'))
-                    way[last_position]=position
+                    g_cost_d[last_position] = tg_cost_d
+                    h_cost_d[last_position] = th_cost_d
+                    queue_a.put((th_cost_d, self.distance(last_position, GOAL), last_position, 'M'))
+                    way[last_position] = position
                     way_array.append(position)
         way_array_l = []
         for i in (way_array):
-            way_array_l.append([i[0],i[1]])
-        
+            way_array_l.append([i[0], i[1]])
+
         self.explored = way_array_l
-        

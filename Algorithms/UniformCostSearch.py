@@ -1,5 +1,4 @@
 from queue import PriorityQueue
-from UI.BoardGrapher import BoardGrapher
 import numpy as np
 
 class UniformCostSearch:
@@ -17,7 +16,7 @@ class UniformCostSearch:
         '''
         for i in range(len(self.explored)):
             track = (self.explored[0:i+1])
-            self.gph.printTrack(track, f"UCS_{i}")
+            self.gph.printTrack(track, f"{i}")
     
     def generate_cost(self, MAZE):
         g_score = {}
