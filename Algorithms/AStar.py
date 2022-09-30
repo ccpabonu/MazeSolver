@@ -11,9 +11,12 @@ class A_Star:
         self.print_A_Star()
 
     def print_A_Star(self):
+        '''
+        This function print the images 
+        '''
         for i in range(len(self.explored)):
             track = (self.explored[0:i+1])
-            self.gph.printTrack(track, f"{i}")
+            self.gph.printTrack(track, f"A_star_{i}")
     
     def generate_cost(self, MAZE):
         g_score = {}
@@ -41,9 +44,9 @@ class A_Star:
         g_cost_d = self.generate_cost(self.MAZE)
         g_cost_d[tuple(START)] = 0
         h_cost_d = self.generate_cost(self.MAZE)
-        h_cost_d[tuple(START)] = self.distance(START,GOAL)
+        h_cost_d[tuple(START)] = self.distance(START,GOAL,'M')
         queue_a = PriorityQueue()
-        queue_a.put( (self.distance(START,GOAL),self.distance(START,GOAL),tuple(START)) )
+        queue_a.put( (self.distance(START,GOAL,'M'),self.distance(START,GOAL,'M'),tuple(START)) )
         way = {}
         way_array = []
         while not queue_a.empty():
@@ -61,13 +64,13 @@ class A_Star:
                 if next_step == 'N' and (self.MAZE[position[0]-1][position[1]] != 'w'):
                     last_position = (position[0]-1,position[1])
                 tg_cost_d = g_cost_d[position]+1
-                th_cost_d = tg_cost_d+self.distance(last_position,tuple(GOAL))
+                th_cost_d = tg_cost_d+self.distance(last_position,tuple(GOAL),'M')
                 if position == tuple(GOAL):
                     break
                 if th_cost_d < h_cost_d[last_position]:
                     g_cost_d[last_position]=tg_cost_d
                     h_cost_d[last_position]=th_cost_d
-                    queue_a.put( (th_cost_d,self.distance(last_position, GOAL),last_position))
+                    queue_a.put( (th_cost_d,self.distance(last_position, GOAL),last_position,'M'))
                     way[last_position]=position
                     way_array.append(position)
         way_array_l = []
@@ -75,5 +78,4 @@ class A_Star:
             way_array_l.append([i[0],i[1]])
         
         self.explored = way_array_l
-
         
