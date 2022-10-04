@@ -83,9 +83,9 @@
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>0</x>
       <y>160</y>
-      <width>551</width>
+      <width>541</width>
       <height>192</height>
      </rect>
     </property>
@@ -113,7 +113,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Execution Time (ms)</string>
+      <string>Execution Time (nano seconds)</string>
      </property>
     </column>
     <column>
@@ -121,6 +121,19 @@
       <string>Memory Usage (bytes)</string>
      </property>
     </column>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>170</y>
+      <width>251</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;El tiempo y memoria usada es calculado &lt;/p&gt;&lt;p&gt;sin el procesamiento de imágenes&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;solo el algoritmo encargado de la búsqueda&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
    </widget>
   </widget>
  </widget>

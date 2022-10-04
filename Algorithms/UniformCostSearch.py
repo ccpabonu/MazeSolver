@@ -1,3 +1,4 @@
+import time
 from queue import PriorityQueue
 import numpy as np
 
@@ -7,7 +8,10 @@ class UniformCostSearch:
         self.gph = gph
         self.explored = []
         self.f_way = self.explored[::-1]
+        st = time.time_ns()
         self.UniformCostSearch_f()
+        et = time.time_ns()
+        self.elapsed_time = et - st
         self.print_UniformCostSearch()
 
     def print_UniformCostSearch(self):

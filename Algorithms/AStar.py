@@ -1,6 +1,6 @@
 from queue import PriorityQueue
 import numpy as np
-
+import time
 
 class AStar:
     def __init__(self, MAZE, gph):
@@ -8,7 +8,10 @@ class AStar:
         self.gph = gph
         self.explored = []
         self.f_way = self.explored[::-1]
+        st = time.time_ns()
         self.A_Star_maze()
+        et = time.time_ns()
+        self.elapsed_time = et - st
         self.print_A_Star()
 
     def print_A_Star(self):

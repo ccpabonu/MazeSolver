@@ -1,4 +1,5 @@
 import csv
+import sys
 import tkinter as tk
 import cv2
 
@@ -26,6 +27,7 @@ from UI.LoadingGif import ImageLabel
 class MainWindows(QMainWindow):
 
     def __init__(self):
+        self.root = tk.Tk()
         self.routeMaze = ""
         self.matrix = None
         self.name = ""
@@ -33,11 +35,13 @@ class MainWindows(QMainWindow):
         self.tree = None
         self.target = None
         self.row = 0
+        self.time = 0
+        self.memory = 0
 
         super(MainWindows, self).__init__()
         uic.loadUi("UI/UIQtDesigner/MainWindow.ui", self)
 
-        self.tableWidget.setColumnWidth(2,161)
+        self.tableWidget.setColumnWidth(2, 161)
         self.tableWidget.setColumnWidth(3, 161)
         self.pushButton.clicked.connect(self.loadImage)
         self.pushButton_2.clicked.connect(self.solveMaze)
@@ -81,6 +85,10 @@ class MainWindows(QMainWindow):
 
         selected = self.comboBox.currentText()
 
+        if self.root.children.__len__() != 0 :
+            self.root.destroy()
+            self.root = tk.Tk()
+
         if selected == Search.Depth.value:
             self.g.name = self.name + "-Depth"
             self.solveDepth()
@@ -100,10 +108,17 @@ class MainWindows(QMainWindow):
             self.g.name = self.name + "-Interactive"
             self.solveInteractiveDepth()
 
+        self.tableWidget.insertRow(self.row)
         self.tableWidget.setItem(self.row, 0, QtWidgets.QTableWidgetItem(self.name))
         self.tableWidget.setItem(self.row, 1, QtWidgets.QTableWidgetItem(selected))
-        self.tableWidget.setItem(self.row, 2, QtWidgets.QTableWidgetItem(selected))
+        self.tableWidget.setItem(self.row, 2, QtWidgets.QTableWidgetItem(str(self.time)))
+        self.tableWidget.setItem(self.row, 3, QtWidgets.QTableWidgetItem(str(self.memory)))
+        self.row = self.row + 1
 
+        lbl = ImageLabel(self.root)
+        lbl.pack()
+        lbl.load(f"UI/gif/{self.g.name}.gif")
+        self.root.mainloop()
 
 
     def CvsToMatrix(self):
@@ -114,55 +129,37 @@ class MainWindows(QMainWindow):
         return result
 
     def solveDepth(self):
-        Depth(self.matrix, self.g)
+        d = Depth(self.matrix, self.g)
+        self.time = d.elapsed_time
+        self.memory = sys.getsizeof(d)
         self.g.printGif()
-        root = tk.Tk()
-        lbl = ImageLabel(root)
-        lbl.pack()
-        lbl.load(f"UI/gif/{self.g.name}.gif")
-        root.mainloop()
 
     def solveWidth(self):
-        Width(self.tree, self.target, self.g)
+        w = Width(self.tree, self.target, self.g)
+        self.time = w.elapsed_time
+        self.memory = sys.getsizeof(w)
         self.g.printGif()
-        root = tk.Tk()
-        lbl = ImageLabel(root)
-        lbl.pack()
-        lbl.load(f"UI/gif/{self.g.name}.gif")
-        root.mainloop()
 
     def solveUniformCostSearch(self):
-        UniformCostSearch(self.matrix, self.g)
+        u = UniformCostSearch(self.matrix, self.g)
+        self.time = u.elapsed_time
+        self.memory = sys.getsizeof(u)
         self.g.printGif()
-        root = tk.Tk()
-        lbl = ImageLabel(root)
-        lbl.pack()
-        lbl.load(f"UI/gif/{self.g.name}.gif")
-        root.mainloop()
 
     def solveAStar(self):
-        AStar(self.matrix, self.g)
+        a = AStar(self.matrix, self.g)
+        self.time = a.elapsed_time
+        self.memory = sys.getsizeof(a)
         self.g.printGif()
-        root = tk.Tk()
-        lbl = ImageLabel(root)
-        lbl.pack()
-        lbl.load(f"UI/gif/{self.g.name}.gif")
-        root.mainloop()
 
     def solveGreedy(self):
-        GreedySearch(self.matrix, self.g)
+        g = GreedySearch(self.matrix, self.g)
+        self.time = g.elapsed_time
+        self.memory = sys.getsizeof(g)
         self.g.printGif()
-        root = tk.Tk()
-        lbl = ImageLabel(root)
-        lbl.pack()
-        lbl.load(f"UI/gif/{self.g.name}.gif")
-        root.mainloop()
 
     def solveInteractiveDepth(self):
-        IterativeDepth(self.matrix, self.g)
+        i = IterativeDepth(self.matrix, self.g)
+        self.time = i.elapsed_time
+        self.memory = sys.getsizeof(i)
         self.g.printGif()
-        root = tk.Tk()
-        lbl = ImageLabel(root)
-        lbl.pack()
-        lbl.load(f"UI/gif/{self.g.name}.gif")
-        root.mainloop()

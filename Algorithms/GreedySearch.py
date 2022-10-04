@@ -1,3 +1,4 @@
+import time
 from queue import PriorityQueue
 import numpy as np
 
@@ -8,7 +9,10 @@ class GreedySearch:
         self.gph = gph
         self.explored = []
         self.f_way = self.explored[::-1]
+        st = time.time_ns()
         self.Greedy_Search_f()
+        et = time.time_ns()
+        self.elapsed_time = et - st
         self.print_A_Star()
 
     def print_A_Star(self):

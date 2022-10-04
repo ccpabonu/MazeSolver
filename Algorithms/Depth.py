@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 from Algorithms.Models.Stack import Stack
 
@@ -8,7 +10,10 @@ class Depth:
         self.gph = gph
         self.f_way = []
         self.explored = []
+        st = time.time_ns()
         self.Search()
+        et = time.time_ns()
+        self.elapsed_time = et - st
         self.print_dfs()
 
     def print_dfs(self):

@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 from Algorithms.Models.Stack import Stack
 
@@ -8,7 +10,10 @@ class IterativeDepth:
         self.gph = gph
         self.f_way = []
         self.explored = []
+        st = time.time_ns()
         self.Search_idfs()
+        et = time.time_ns()
+        self.elapsed_time = et - st
         self.print_idfs()
         
     def print_idfs(self):

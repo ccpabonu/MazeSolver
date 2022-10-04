@@ -1,4 +1,5 @@
 import sys
+import time
 
 
 class Width:
@@ -12,6 +13,11 @@ class Width:
         self.count = 1
         sys.setrecursionlimit(2000)
         self.searchWithImg()
+        st = time.time_ns()
+        self.queue = [self.tree]
+        self.search()
+        et = time.time_ns()
+        self.elapsed_time = et - st
 
     def searchWithImg(self):
         self.grapher.printTrack(self.track, f"{self.count}")
@@ -25,7 +31,6 @@ class Width:
             self.searchWithImg()
 
     def search(self):
-        self.count = self.count + 1
         nodo = self.queue.pop(0)
         if nodo.name != self.target:
             self.queue = self.queue + list(nodo.children)
