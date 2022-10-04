@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>181</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,6 +79,48 @@
     <property name="text">
      <string>Solucionar Laberinto</string>
     </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>160</y>
+      <width>551</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <attribute name="verticalHeaderCascadingSectionResizes">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderHighlightSections">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Maze-Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Algorithms</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Execution Time (ms)</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Memory Usage (bytes)</string>
+     </property>
+    </column>
    </widget>
   </widget>
  </widget>

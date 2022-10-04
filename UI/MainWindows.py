@@ -32,9 +32,13 @@ class MainWindows(QMainWindow):
         self.g = None
         self.tree = None
         self.target = None
+        self.row = 0
 
         super(MainWindows, self).__init__()
         uic.loadUi("UI/UIQtDesigner/MainWindow.ui", self)
+
+        self.tableWidget.setColumnWidth(2,161)
+        self.tableWidget.setColumnWidth(3, 161)
         self.pushButton.clicked.connect(self.loadImage)
         self.pushButton_2.clicked.connect(self.solveMaze)
 
@@ -95,6 +99,11 @@ class MainWindows(QMainWindow):
         elif selected == Search.InteractiveDepth.value:
             self.g.name = self.name + "-Interactive"
             self.solveInteractiveDepth()
+
+        self.tableWidget.setItem(self.row, 0, QtWidgets.QTableWidgetItem(self.name))
+        self.tableWidget.setItem(self.row, 1, QtWidgets.QTableWidgetItem(selected))
+        self.tableWidget.setItem(self.row, 2, QtWidgets.QTableWidgetItem(selected))
+
 
 
     def CvsToMatrix(self):
